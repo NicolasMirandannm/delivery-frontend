@@ -1,0 +1,16 @@
+[
+  {
+    "categoryId": "5002b3b9-69c0-45d2-a47d-d4191b44c226",
+    "categoryName": "Sorvetes",
+    "products": [
+      {
+        "id": "30e27477-88ef-4fc7-b996-4ac6b136373a",
+        "name": "Sorvete de morango",
+        "description": "descrição do produto",
+        "price": 15.99,
+        "sizes": ["P", "M", "G"],
+        "image": "link da imagem no backend"
+      }
+    ]
+  }
+]

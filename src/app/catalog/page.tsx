@@ -2,7 +2,7 @@ import { Anchor, ConfigProvider, Divider } from 'antd';
 import { AnchorLinkItemProps } from "antd/es/anchor/Anchor";
 import './style.css'
 import '../utils/utils.css'
-import { CatalogList } from '@/app/catalog/components/CatalogList';
+import { CatalogList } from '@/app/components/catalog/CatalogList';
 import { ProductApi } from '@/app/api/product/productApi';
 
 export default async function Catalog() {

@@ -16,12 +16,10 @@ export function InputNumberPlusMinus(prop: { handleCounter: Function, initialVal
   }
 
   return (
-    <>
-      <div className={ "number-input" }>
+      <div className={ "number-input" } style={{borderRadius: 4}}>
         <Button className={'button'} onClick={() => minus()}></Button>
         <Input className={ "quantity input" } value={count} type="number"/>
         <Button className={ "plus button" } onClick={() => plus()}></Button>
       </div>
-    </>
   )
 }

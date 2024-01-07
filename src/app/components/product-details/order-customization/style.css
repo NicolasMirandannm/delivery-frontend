@@ -1,0 +1,8 @@
+.content {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background: rgba(52, 69, 129, 0.15);
+    width: 100%;
+    min-height: 200px;
+    border-radius: 4px;
+}

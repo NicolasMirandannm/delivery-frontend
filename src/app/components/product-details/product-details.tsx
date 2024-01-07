@@ -15,7 +15,7 @@ export function ProductDetails() {
   }
 
   return (
-    <div className={'card'}>
+    <div className={'card scrollbar'} id={'container'}>
       <div className={ 'details' }>
         <img src={ urlimage } alt={ 'img' } className={ 'img' }/>
         <h3>Nome do lanche</h3>
@@ -24,7 +24,7 @@ export function ProductDetails() {
           morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna,
           auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing.</p>
 
-        <div className={ 'centralize-column' }>
+        <div className={ 'centralize-column' } style={{width: '90%'}}>
           <OrderCustomization/>
         </div>
         <div className={ 'order' }>

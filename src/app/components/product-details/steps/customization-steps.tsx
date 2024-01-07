@@ -4,7 +4,7 @@ import { Button, message, Popover, Steps, StepsProps, theme } from 'antd';
 import './style.css'
 import {
   ComplementsSelect
-} from '@/app/components/product-details/order-customization/complements-select/complements-select';
+} from '@/app/components/product-details/complements-select/complements-select';
 
 export function CustomizationSteps() {
    const steps = [
@@ -39,7 +39,7 @@ export function CustomizationSteps() {
   return (
     <>
       <div className={ 'steps-container' }>
-        <Steps   size={ 'small' } className={'centralize-row steps'} current={ current } items={ items }/>
+        <Steps size={ 'small' } className={'steps'} current={ current } items={ items }/>
       </div>
       <div className={ 'content' }>
         <ComplementsSelect></ComplementsSelect>
@@ -47,17 +47,17 @@ export function CustomizationSteps() {
       <div>
         { current > 0 && (
           <Button style={ { margin: '0 8px' } } onClick={ () => prev() }>
-            Previous
+            Voltar
           </Button>
         ) }
         { current === steps.length - 1 && (
-          <Button type="primary" onClick={ () => message.success('Processing complete!') }>
-            Done
+          <Button style={{width: 200}} type="primary" onClick={ () => message.success('Montagem finalizada, o pedido já pode ser prosseguido!') }>
+            Finalizar montagem
           </Button>
         ) }
         { current < steps.length - 1 && (
           <Button type="primary" onClick={ () => next() }>
-            Next
+            Próximo
           </Button>
         ) }
       </div>

@@ -39,7 +39,7 @@
 
 
 .details {
-    width: 100%;
+    width: 90%;
     height: 100%;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
@@ -47,7 +47,7 @@
     flex-direction: column;
     align-items: center;
     align-content: center;
-    padding: 25px;
+    margin: 15px;
 }
 
 .img {
@@ -74,20 +74,34 @@
 
 .order {
     width: 90%;
-    padding: 5px;
+    margin: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
     text-align: center;
 }
 
 .order-content {
     height: 100%;
     width: 100%;
-    justify-content: space-around;
+    margin-bottom: 15px;
 }
 
 .description {
     width: 90%;
     text-align: center;
+}
+
+@media (max-width: 500px) {
+
+    .order {
+        width: 90%;
+        margin: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        text-align: center;
+    }
+
 }

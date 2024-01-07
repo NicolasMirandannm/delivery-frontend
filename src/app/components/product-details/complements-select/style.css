@@ -1,11 +1,23 @@
 .title {
     text-align: center;
     width: 70%;
+    padding: 10px;
 }
 
 .amount {
     width: 30%;
     text-align: center;
+    font-size: 0.8em;
+    padding: 15px 15px;
+}
+
+@media (min-width: 650px) {
+    .amount {
+        width: 30%;
+        text-align: center;
+        font-size: 1em;
+        padding: 15px 15px;
+    }
 }
 
 .vertical-divider {
@@ -47,12 +59,13 @@
 }
 
 .complement-amount {
-    width: 25%;
+    width: 15%;
     height: 100%;
 }
 
 .actions {
     margin-top: 5px;
-    width: 25%;
+    width: 35%;
     opacity: 80%;
+    padding: 5px;
 }

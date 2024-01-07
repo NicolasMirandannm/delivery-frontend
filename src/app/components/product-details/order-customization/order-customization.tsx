@@ -2,17 +2,17 @@ import { Radio } from 'antd';
 import { useState } from 'react';
 import './style.css';
 import '@/app/utils/utils.css'
-import { CustomizationSteps } from '@/app/components/product-details/order-customization/steps/customization-steps';
+import { CustomizationSteps } from '@/app/components/product-details/steps/customization-steps';
 
 export function OrderCustomization () {
   const [size, setSize] = useState('pequeno');
   return (
     <>
-      <Radio.Group onChange={(e) => setSize(e.target.value)} value={size}>
-        <Radio.Button value={'pequeno'}>Pequeno</Radio.Button>
-        <Radio.Button value={'medio'}>Médio</Radio.Button>
-        <Radio.Button value={'grande'}>Grande</Radio.Button>
-      </Radio.Group>
+        <Radio.Group onChange={(e) => setSize(e.target.value)} value={size}>
+          <Radio.Button value={'pequeno'}>Pequeno</Radio.Button>
+          <Radio.Button value={'medio'}>Médio</Radio.Button>
+          <Radio.Button value={'grande'}>Grande</Radio.Button>
+        </Radio.Group>
       <div className={'content centralize-column'}>
         <CustomizationSteps />
       </div>

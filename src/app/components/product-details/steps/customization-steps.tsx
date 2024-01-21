@@ -5,21 +5,33 @@ import './style.css'
 import {
   ComplementsSelect
 } from '@/app/components/product-details/complements-select/complements-select';
-import { ComplementCategory, ComplementOrderItem } from '@/app/models/complement/complement-category';
+import { ComplementCategory, ComplementOrderItem, ComplementSize } from '@/app/models/complement/complement-category';
 
 
 const complementOrderItems = [new ComplementOrderItem('morango'), new ComplementOrderItem('banana')]
 const complementOrderItems2 = [new ComplementOrderItem('banana')]
-const complementCategories = [
-  new ComplementCategory('categoria 1', 5, complementOrderItems),
-  new ComplementCategory('categoria 2', 3, complementOrderItems2)
-]
-export function CustomizationSteps() {
+const sizes = [ new ComplementSize('pequeno', 5), new ComplementSize('medio', 7)]
+const sizes2 = [ new ComplementSize('pequeno', 3), new ComplementSize('medio', 5)]
 
+const complementCategories = [
+  new ComplementCategory('categoria 1', sizes, complementOrderItems),
+  new ComplementCategory('categoria 2', sizes2, complementOrderItems2)
+]
+export function CustomizationSteps({ sizeSelected }: {sizeSelected: string}) {
+  const [current, setCurrent] = useState(0);
+  const [changedSize, setChangedSize] = useState(false);
+
+  useEffect(() => {
+    for (let i=0; i < complementCategories.length; i++) {
+      complementCategories[i].changeSize(sizeSelected)
+      setCurrent(0);
+    }
+    setChangedSize(!changedSize)
+  }, [sizeSelected]);
+
+  const currentCategory= complementCategories?.[current];
   const items = complementCategories.map((category) => ({ key: category.name, title: category.name }));
 
-  const [current, setCurrent] = useState(0);
-  const currentCategory= complementCategories?.[current];
 
   const next = () => {
     setCurrent(current + 1);
@@ -40,7 +52,7 @@ export function CustomizationSteps() {
         <Steps size={ 'small' } className={'steps'} current={ current } items={ items }/>
       </div>
       <div className={ 'content' }>
-        <ComplementsSelect complementCategory={currentCategory} handleComplementCategory={handleCurrentCategory}></ComplementsSelect>
+        <ComplementsSelect complementCategory={currentCategory} changedSize={changedSize} handleComplementCategory={handleCurrentCategory}></ComplementsSelect>
       </div>
       <div>
         { current > 0 && (

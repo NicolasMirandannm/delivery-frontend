@@ -5,14 +5,14 @@ import { useEffect, useRef, useState } from 'react';
 import { ComplementCategory } from '@/app/models/complement/complement-category';
 
 
-export function ComplementsSelect({ complementCategory, handleComplementCategory }: { complementCategory: ComplementCategory, handleComplementCategory: Function }) {
+export function ComplementsSelect({ complementCategory, handleComplementCategory, changedSize }: { complementCategory: ComplementCategory, handleComplementCategory: Function, changedSize: boolean }) {
   const [amountAvailable, setAmountAvailable] = useState(complementCategory.getAmountAvailable());
   const [items, setItems] = useState(complementCategory.items);
 
   useEffect(() => {
     setAmountAvailable(complementCategory.getAmountAvailable());
     setItems(complementCategory.items);
-  }, [complementCategory])
+  }, [complementCategory, changedSize])
 
   const add = (indexItem: number) => {
     complementCategory.addItem(indexItem)

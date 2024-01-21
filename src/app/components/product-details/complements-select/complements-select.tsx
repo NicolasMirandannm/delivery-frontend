@@ -1,71 +1,61 @@
-'use client';
 import './style.css'
 import { Button, Divider } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ComplementCategory } from '@/app/models/complement/complement-category';
 
-export function ComplementsSelect() {
-  const [amountAvailable, setAmountAvailable] = useState(5);
-  const amountTotal = 5;
-  const complementCategory = 'complement category';
-  const [complements, setComplements] = useState([
-    {
-      name: 'morango',
-      amountSelected: 0
-    },
-    {
-      name: 'abacaxi',
-      amountSelected: 0
-    },
-    {
-      name: 'kiwi',
-      amountSelected: 0
-    }
-  ]);
+
+export function ComplementsSelect({ complementCategory, handleComplementCategory }: { complementCategory: ComplementCategory, handleComplementCategory: Function }) {
+  const [amountAvailable, setAmountAvailable] = useState(complementCategory.getAmountAvailable());
+  const [items, setItems] = useState(complementCategory.items);
+
+  useEffect(() => {
+    setAmountAvailable(complementCategory.getAmountAvailable());
+    setItems(complementCategory.items);
+  }, [complementCategory])
 
   const add = (indexItem: number) => {
-    if (amountAvailable === 0) return;
-    complements[indexItem].amountSelected++;
-    setComplements(complements);
-    setAmountAvailable(amountAvailable - 1);
+    complementCategory.addItem(indexItem)
+    setItems(items);
+    setAmountAvailable(complementCategory.getAmountAvailable());
+    handleComplementCategory(complementCategory);
   };
 
   const remove = (indexItem: number) => {
-    console.log(amountTotal)
-    if (amountAvailable === amountTotal) return;
-    complements[indexItem].amountSelected--;
-    setComplements(complements);
-    setAmountAvailable(amountAvailable + 1);
+    complementCategory.removeItem(indexItem)
+    setItems(items);
+    setAmountAvailable(complementCategory.getAmountAvailable());
+    handleComplementCategory(complementCategory);
   };
 
   return (
     <div className={ 'centralize-column' }>
-      <div className={'title-content'}>
-        <p className={ 'title' }>{ complementCategory }</p>
-        <Divider type={'vertical'} className={'vertical-divider'} />
-        <p className={'amount'}>Qtd disponível: { amountAvailable } </p>
+      <div className={ 'title-content' }>
+        <p className={ 'title' }>{ complementCategory.name }</p>
+        <Divider type={ 'vertical' } className={ 'vertical-divider' }/>
+        <p className={ 'amount' }>Qtd disponível: { amountAvailable } </p>
       </div>
       <Divider className={ 'divider' }/>
-      { complements.map((complement, key: number) => (
-        <div key={key} className={ 'complement-content' }>
-          <p className={ 'complement-title' }>{complement.name}</p>
-          {complement.amountSelected > 0
-            ? (<p className={ 'complement-amount centralize-row' }>{ complement.amountSelected }x</p>)
+      { items.map((item, key: number) => (
+        <div key={ key } className={ 'complement-content' }>
+          <p className={ 'complement-title' }>{ item.getName() }</p>
+          { item.getAmountSelected() > 0
+            ? (<p className={ 'complement-amount centralize-row' }>{ item.getAmountSelected() }x</p>)
             : (<p className={ 'complement-amount centralize-row' }></p>) }
           <div className={ 'actions centralize-row' }>
             <Button
               style={ { marginRight: 5 } }
               type={ 'primary' }
-              disabled={complement.amountSelected === 0}
+              disabled={ item.getAmountSelected() === 0 }
               danger
               icon={ <MinusOutlined/> }
-              onClick={() => remove(key)}
+              onClick={ () => remove(key) }
             />
             <Button
               type={ 'primary' }
-              disabled={amountAvailable === 0 }
+              disabled={ amountAvailable === 0 }
               icon={ <PlusOutlined/> }
-              onClick={() => add(key)}
+              onClick={ () => add(key) }
             />
           </div>
         </div>

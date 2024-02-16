@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { InputNumberPlusMinus } from '@/app/components/utils/input-number-plus-minus/inputNumberPlusMinus';
 import { useState } from 'react';
 import '@/app/utils/utils.css'
-import { OrderCustomization } from '@/app/components/product-details/order-customization/order-customization';
+import { OrderCustomization } from '@/app/catalog/components/product-details/order-customization/order-customization';
 
 const urlimage = 'https://cdn6.campograndenews.com.br/uploads/noticias/2022/10/25/37eb09c8ff78e8f7b74da63a3a0ba4a33e0aae03.jpg'
 export function ProductDetails() {

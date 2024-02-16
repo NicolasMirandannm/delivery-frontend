@@ -4,7 +4,7 @@ import { Button, message, Popover, Steps, StepsProps, theme } from 'antd';
 import './style.css'
 import {
   ComplementsSelect
-} from '@/app/components/product-details/complements-select/complements-select';
+} from '@/app/catalog/components/product-details/complements-select/complements-select';
 import { ComplementCategory, ComplementOrderItem, ComplementSize } from '@/app/models/complement/complement-category';
 
 

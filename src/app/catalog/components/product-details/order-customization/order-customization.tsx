@@ -2,7 +2,7 @@ import { Radio } from 'antd';
 import { useState } from 'react';
 import './style.css';
 import '@/app/utils/utils.css'
-import { CustomizationSteps } from '@/app/components/product-details/steps/customization-steps';
+import { CustomizationSteps } from '@/app/catalog/components/product-details/steps/customization-steps';
 
 export function OrderCustomization () {
   const [size, setSize] = useState('pequeno');

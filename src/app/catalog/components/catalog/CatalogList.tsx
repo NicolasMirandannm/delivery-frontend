@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Button, Col, List, Row } from 'antd';
-import '../../utils/utils.css'
+import '../../../utils/utils.css'
 import { Product } from '@/app/catalog/types/CatalogTypes';
 
 

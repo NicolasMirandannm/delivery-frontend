@@ -1,4 +1,4 @@
-import { Catalog, Product } from '@/app/catalog/types/CatalogTypes';
+import { Catalog, Product } from '@/app/catalog/types/catalog-types';
 import { ApiService } from '@/app/api/ApiService';
 
 export class ProductApi {
@@ -19,5 +19,11 @@ export class ProductApi {
         }))
       }
     });
+  }
+
+  public async detailProductById(id: string) {
+    // const apiData = await this.apiService.get(`/product/detail/${id}`);
+    console.log('requesting product detail by id: ', id);
+return { id: id, name: 'product name', description: 'product description', price: 10, sizes: 'P, M, G', image: 'https://via.placeholder.com/150' };
   }
 }

@@ -2,16 +2,11 @@
 const nextConfig = {
   async redirects() {
     return [
-      // {
-      //   source: '/',
-      //   destination: '/catalog',
-      //   permanent: true
-      // },
       {
         source: '/',
-        destination: '/test',
+        destination: '/catalog',
         permanent: true
-      }
+      },
     ]
   }
 }

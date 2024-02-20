@@ -3,9 +3,8 @@ import { AnchorLinkItemProps } from "antd/es/anchor/Anchor";
 import './style.css'
 import '../utils/utils.css'
 import { CatalogList } from '@/app/catalog/components/catalog/catalog-list';
-import { ProductApi } from '@/app/api/product/productApi';
+import productApi from '@/app/api/product/productApi';
 
-const productApi = new ProductApi();
 
 export default async function Catalog() {
 

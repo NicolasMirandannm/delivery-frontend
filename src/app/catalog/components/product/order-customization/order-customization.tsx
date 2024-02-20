@@ -18,3 +18,5 @@ export function OrderCustomization() {
     </>
   );
 }
+
+//todo implementar prop de tamanho e handler de mudança de tamanho

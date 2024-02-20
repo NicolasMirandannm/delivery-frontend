@@ -2,14 +2,17 @@ export type Product = {
   id: string,
   name: string,
   description: string,
-  price: number,
-  sizes: string[],
-  image: string;
+  servingSizes: CatalogProductServingSize[],
+  imageURI: string;
+}
+
+export type CatalogProductServingSize = {
+  name: string,
+  price: number
 }
 
 export type Catalog = {
   categoryId: string,
   categoryName: string,
   products: Product[]
-
 }

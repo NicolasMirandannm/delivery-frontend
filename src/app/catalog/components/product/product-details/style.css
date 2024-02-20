@@ -4,6 +4,7 @@
     height: 90%;
     display: flex;
     border-radius: 4px;
+    background: #eeeeee;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
                 rgba(17, 17, 26, 0.1) 0px 8px 24px,
                 rgba(17, 17, 26, 0.1) 0px 16px 56px;
@@ -70,6 +71,11 @@
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px,
                 rgba(17, 17, 26, 0.1) 0px 2px 6px,
                 rgba(17, 17, 26, 0.1) 0px 4px 14px;
+}
+
+.add-to-cart-btn {
+    color: #326f8a;
+    border-color: #326f8a;
 }
 
 .order {

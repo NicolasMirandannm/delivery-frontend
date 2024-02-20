@@ -1,12 +1,14 @@
-import axios from 'axios';
-
 export class ApiService {
-  private static readonly uri = axios.create({
-    baseURL: 'http://localhost:8080'
-  })
+
+  private readonly url: string = 'http://localhost:8080';
 
   public async get(apiRote?: string): Promise<any> {
-    const response = await ApiService.uri.get(apiRote || '/');
-    return response.data;
+    const response = await fetch(this.url + apiRote || '/', {
+      method: 'GET',
+      next: {
+        revalidate: 15
+      }
+    });
+    return await response.json();
   }
 }

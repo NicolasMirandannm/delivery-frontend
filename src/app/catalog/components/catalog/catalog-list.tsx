@@ -40,7 +40,7 @@ export function CatalogList({ products }: { products: Product[] }) {
         ) }
       />
       <Dialog open={ openDialog }>
-        <ProductDetails productId={ selectedProductId } closeDialog={ closeDialog } />
+        <ProductDetails productId={ selectedProductId } onCancelHandler={ closeDialog } />
       </Dialog>
     </>
   );

@@ -5,31 +5,30 @@ import './style.css'
 import {
   ComplementsSelect
 } from '@/app/catalog/components/product/complements-select/complements-select';
-import { ComplementCategory, ComplementOrderItem, ComplementSize } from '@/app/models/complement/complement-category';
+import {
+  ComplementCategoryOnOrder,
+  ComplementOrderItem,
+  ComplementSize
+} from '@/app/models/complement/complement-category-on-order';
+import { ComplementCategoryOnOrderFactory } from '@/app/catalog/factories/complement-category-on-order.factory';
+import { ProductDetailDto } from '@/app/catalog/types/product-detail-dto';
 
-
-const complementOrderItems = [new ComplementOrderItem('morango'), new ComplementOrderItem('banana')]
-const complementOrderItems2 = [new ComplementOrderItem('banana')]
-const sizes = [ new ComplementSize('pequeno', 5), new ComplementSize('medio', 7)]
-const sizes2 = [ new ComplementSize('pequeno', 3), new ComplementSize('medio', 5)]
-
-const complementCategories = [
-  new ComplementCategory('categoria 1', sizes, complementOrderItems),
-  new ComplementCategory('categoria 2', sizes2, complementOrderItems2)
-]
-export function CustomizationSteps({ sizeSelected }: {sizeSelected: string}) {
+export function CustomizationSteps({ sizeSelected, detailedProduct }: { sizeSelected: string, detailedProduct: ProductDetailDto }) {
   const [current, setCurrent] = useState(0);
   const [changedSize, setChangedSize] = useState(false);
+  const [complementCategories, setComplementCategories] = useState<ComplementCategoryOnOrder[]>(
+    ComplementCategoryOnOrderFactory.createManyBy(detailedProduct)
+  );
 
   useEffect(() => {
-    for (let i=0; i < complementCategories.length; i++) {
-      complementCategories[i].changeSize(sizeSelected)
+    complementCategories.forEach(category => {
+      category.changeSize(sizeSelected);
       setCurrent(0);
-    }
-    setChangedSize(!changedSize)
+    });
+    setChangedSize(!changedSize);
   }, [sizeSelected]);
 
-  const currentCategory= complementCategories?.[current];
+  const currentCategory = complementCategories?.[current];
   const items = complementCategories.map((category) => ({ key: category.name, title: category.name }));
 
 
@@ -41,7 +40,7 @@ export function CustomizationSteps({ sizeSelected }: {sizeSelected: string}) {
     setCurrent(current - 1);
   };
 
-  const handleCurrentCategory = (category: ComplementCategory) => {
+  const handleCurrentCategory = (category: ComplementCategoryOnOrder) => {
     const categoryIndex = complementCategories.findIndex(item => item.name == category.name);
     complementCategories[categoryIndex] = category;
   };
@@ -49,10 +48,14 @@ export function CustomizationSteps({ sizeSelected }: {sizeSelected: string}) {
   return (
     <>
       <div className={ 'steps-container' }>
-        <Steps size={ 'small' } className={'steps'} current={ current } items={ items }/>
+        <Steps size={ 'small' } className={ 'steps' } current={ current } items={ items }/>
       </div>
       <div className={ 'content' }>
-        <ComplementsSelect complementCategory={currentCategory} changedSize={changedSize} handleComplementCategory={handleCurrentCategory}></ComplementsSelect>
+        <ComplementsSelect
+          complementCategory={ currentCategory }
+          changedSize={ changedSize }
+          handleComplementCategory={ handleCurrentCategory }
+        />
       </div>
       <div>
         { current > 0 && (
@@ -61,7 +64,7 @@ export function CustomizationSteps({ sizeSelected }: {sizeSelected: string}) {
           </Button>
         ) }
         { current === complementCategories.length - 1 && (
-          <Button style={{width: 200}} type="primary" onClick={ () => {
+          <Button style={ { width: 200 } } type="primary" onClick={ () => {
             message.success('Montagem finalizada, o pedido já pode ser prosseguido!')
             console.log(complementCategories)
           } }>

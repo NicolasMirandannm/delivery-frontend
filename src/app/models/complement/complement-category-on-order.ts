@@ -1,4 +1,4 @@
-export class ComplementCategory {
+export class ComplementCategoryOnOrder {
   private amountAvailableTotal: number;
   readonly name: string;
   private sizeSelected: string;

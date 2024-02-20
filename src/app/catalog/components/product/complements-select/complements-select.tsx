@@ -2,10 +2,10 @@ import './style.css'
 import { Button, Divider } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
-import { ComplementCategory } from '@/app/models/complement/complement-category';
+import { ComplementCategoryOnOrder } from '@/app/models/complement/complement-category-on-order';
 
 
-export function ComplementsSelect({ complementCategory, handleComplementCategory, changedSize }: { complementCategory: ComplementCategory, handleComplementCategory: Function, changedSize: boolean }) {
+export function ComplementsSelect({ complementCategory, handleComplementCategory, changedSize }: { complementCategory: ComplementCategoryOnOrder, handleComplementCategory: Function, changedSize: boolean }) {
   const [amountAvailable, setAmountAvailable] = useState(complementCategory.getAmountAvailable());
   const [items, setItems] = useState(complementCategory.items);
 

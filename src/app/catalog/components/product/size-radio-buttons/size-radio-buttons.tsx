@@ -2,15 +2,14 @@ import { Radio } from 'antd';
 import { useState } from 'react';
 import './style.css';
 import '@/app/utils/utils.css'
-import { CustomizationSteps } from '@/app/catalog/components/product/steps/customization-steps';
 import { PriceDto } from '@/app/catalog/types/product-detail-dto';
 
-export function OrderCustomization({ prices, onChangeSizeHandler }: { prices: Array<PriceDto> , onChangeSizeHandler: Function }) {
+export function SizeRadioButtons({ prices, onChangeSizeHandler }: { prices: Array<PriceDto> , onChangeSizeHandler: Function }) {
   const [size, setSize] = useState(prices?.[0].sizeDescription as string);
 
   const changeSize = (size: string) => {
-    setSize(size);
-    const price = prices.find(price => price.sizeDescription === size)?.price;
+    setSize(size)
+    const price = prices.find(price => price.sizeDescription === size);
     onChangeSizeHandler(price);
   }
 
@@ -23,9 +22,6 @@ export function OrderCustomization({ prices, onChangeSizeHandler }: { prices: Ar
           </Radio.Button>
         )}
       </Radio.Group>
-      <div className={ 'content centralize-column' }>
-        <CustomizationSteps sizeSelected={ size }/>
-      </div>
     </>
   );
 }

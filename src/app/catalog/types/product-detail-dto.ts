@@ -1,24 +1,24 @@
 export type ProductDetailDto = {
-  productId: String;
-  name: String;
-  description: String;
-  imagePath: String;
+  productId: string;
+  name: string;
+  description: string;
+  imagePath: string;
   prices: Array<PriceDto>;
   complementCategories: Array<ComplementCategoryDto>;
 }
 
 export type PriceDto = {
-  sizeDescription: String;
-  price: Number;
+  sizeDescription: string;
+  price: number;
 }
 
 export type ComplementCategoryDto = {
-  title: String;
-  complements: Array<String>;
+  title: string;
+  complements: Array<string>;
   sizes: Array<ComplementSizeDto>;
 }
 
 export type ComplementSizeDto = {
-  sizeDescription: String;
-  amountAvailableToSelect: Number;
+  sizeDescription: string;
+  amountAvailableToSelect: number;
 }

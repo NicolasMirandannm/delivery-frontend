@@ -23,7 +23,9 @@ export function ProductDetails({ productId, onCancelHandler }: {
     if (productId?.length) {
       productApi.getProductDetailsBy(productId)
         .then((product) => {
+          product.prices = product.prices.sort((a, b) => a.price - b.price);
           setDetailedProduct(product);
+          setCurrentSize(product.prices[0]);
         })
     }
   }, [productId]);
@@ -31,9 +33,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
   const handleCounter = (value: number) => {
     setCount(value);
   }
-
   const onChangeSizeHandler = (currentSize: PriceDto) => {
-    console.log(currentSize)
     setCurrentSize(currentSize);
   }
 
@@ -48,7 +48,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
             <SizeRadioButtons prices={ detailedProduct.prices } onChangeSizeHandler={ onChangeSizeHandler }/>
             <div className={ 'content centralize-column' }>
               { detailedProduct && (
-                <CustomizationSteps sizeSelected={ currentSize?.sizeDescription as string }/>
+                <CustomizationSteps sizeSelected={ currentSize?.sizeDescription as string } detailedProduct={ detailedProduct }/>
               )}
             </div>
           </div>

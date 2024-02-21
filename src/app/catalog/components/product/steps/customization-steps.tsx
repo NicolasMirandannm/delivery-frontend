@@ -21,6 +21,9 @@ export function CustomizationSteps({ sizeSelected, detailedProduct }: { sizeSele
   );
 
   useEffect(() => {
+    if (!sizeSelected)
+      return;
+
     complementCategories.forEach(category => {
       category.changeSize(sizeSelected);
       setCurrent(0);

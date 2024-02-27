@@ -2,6 +2,7 @@ import { Col, Image, List, Row } from 'antd';
 import React from 'react';
 import { Product } from '@/app/catalog/types/catalog-types';
 import '../../../utils/utils.css'
+import getBRLValueFormated from '@/app/utils/get-brl-value-formated';
 
 export function CatalogItem({ item }: { item: Product }) {
   const startValue = item.servingSizes.sort((a, b) => a.price - b.price)[0].price;
@@ -20,7 +21,7 @@ export function CatalogItem({ item }: { item: Product }) {
         </Col>
         <Col md={ 2 } className={ 'centralize-row' }
              style={ { textAlign: 'center', alignItems: 'flex-start' } }>
-          <p className={ 'text-nunito' }>A partir de R${ startValue }</p>
+          <p className={ 'text-nunito' }>A partir de R${ getBRLValueFormated(startValue) }</p>
         </Col>
         <Col className={ 'centralize-row' } xs={ 12 } sm={ 12 } md={ 6 }
              style={ { width: '100%', maxWidth: 300, minWidth: 250, height: 'auto' } }>

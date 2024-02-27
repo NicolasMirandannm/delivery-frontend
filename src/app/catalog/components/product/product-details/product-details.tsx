@@ -8,6 +8,7 @@ import { SizeRadioButtons } from '@/app/catalog/components/product/size-radio-bu
 import { PriceDto, ProductDetailDto } from '@/app/catalog/types/product-detail-dto';
 import productApi from '@/app/api/product/productApi';
 import { CustomizationSteps } from '@/app/catalog/components/product/steps/customization-steps';
+import getBRLValueFormated from '@/app/utils/get-brl-value-formated';
 
 export function ProductDetails({ productId, onCancelHandler }: {
   productId: string,
@@ -16,6 +17,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
   const [count, setCount] = useState(1);
   const [currentSize, setCurrentSize] = useState<PriceDto | null>(null);
   const [detailedProduct, setDetailedProduct] = useState<ProductDetailDto | null>(null);
+  const totalValue = count * (currentSize?.price ?? 0);
 
   useEffect(() => {
     if (productId?.length) {
@@ -33,6 +35,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
   }
   const onChangeSizeHandler = (currentSize: PriceDto) => {
     setCurrentSize(currentSize);
+    setCount(1)
   }
 
   return (
@@ -41,6 +44,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
         <div className={ 'details' }>
           <Image src={ detailedProduct.imagePath } alt={ 'img' } className={ 'img' }/>
           <h3>{ detailedProduct.name }</h3>
+          <h5 style={{margin: 0}}>R$ { getBRLValueFormated(currentSize?.price) }</h5>
           <p className={ 'description' }>{ detailedProduct.description }</p>
           <div className={ 'centralize-column' } style={ { width: '90%' } }>
             <SizeRadioButtons prices={ detailedProduct.prices } onChangeSizeHandler={ onChangeSizeHandler }/>
@@ -52,7 +56,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
           </div>
           <div className={ 'order' }>
             <div className={ 'centralize-column order-content' }>
-              <h3>Valor R$ { currentSize?.price as number }</h3>
+              <h3>Valor total R$ { getBRLValueFormated(totalValue) }</h3>
               <div style={ { height: '60px' } }>
                 <InputNumberPlusMinus handleCounter={ handleCounter } initialValue={ count }/>
               </div>

@@ -33,7 +33,7 @@ export function ComplementsSelect({ complementCategory, handleComplementCategory
       <div className={ 'title-content' }>
         <p className={ 'title' }>{ complementCategory.name }</p>
         <Divider type={ 'vertical' } className={ 'vertical-divider' }/>
-        <p className={ 'amount' }>Qtd disponível: { amountAvailable } </p>
+        <p className={ 'amount' }>Disponível: { amountAvailable } </p>
       </div>
       <Divider className={ 'divider' }/>
       { items.map((item, key: number) => (

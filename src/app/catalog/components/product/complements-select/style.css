@@ -2,21 +2,22 @@
     text-align: center;
     width: 70%;
     padding: 10px;
+    font-size: clamp(7px, 0.5em + 1.5vw, 1.2em);
 }
 
 .amount {
     width: 30%;
     text-align: center;
-    font-size: 0.8em;
-    padding: 15px 15px;
+    font-size: clamp(7px, 2vw, 1.2em);
+    padding: 10px 10px;
 }
 
 @media (min-width: 650px) {
     .amount {
         width: 30%;
         text-align: center;
-        font-size: 1em;
-        padding: 15px 15px;
+        /*font-size: 1em;*/
+        padding: 5px 5px;
     }
 }
 
@@ -56,6 +57,7 @@
 .complement-title {
     width: 50%;
     margin-left: 15px;
+    font-size: clamp(11px, 2vw, 1.2em);
 }
 
 .complement-amount {

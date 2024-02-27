@@ -9,8 +9,6 @@ import { PriceDto, ProductDetailDto } from '@/app/catalog/types/product-detail-d
 import productApi from '@/app/api/product/productApi';
 import { CustomizationSteps } from '@/app/catalog/components/product/steps/customization-steps';
 
-const urlimage = 'https://cdn6.campograndenews.com.br/uploads/noticias/2022/10/25/37eb09c8ff78e8f7b74da63a3a0ba4a33e0aae03.jpg'
-
 export function ProductDetails({ productId, onCancelHandler }: {
   productId: string,
   onCancelHandler: Function
@@ -41,7 +39,7 @@ export function ProductDetails({ productId, onCancelHandler }: {
     <div className={ 'card scrollbar' } id={ 'container' }>
       { detailedProduct != null && (
         <div className={ 'details' }>
-          <Image src={ urlimage } alt={ 'img' } className={ 'img' }/>
+          <Image src={ detailedProduct.imagePath } alt={ 'img' } className={ 'img' }/>
           <h3>{ detailedProduct.name }</h3>
           <p className={ 'description' }>{ detailedProduct.description }</p>
           <div className={ 'centralize-column' } style={ { width: '90%' } }>

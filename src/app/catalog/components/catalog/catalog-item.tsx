@@ -5,7 +5,7 @@ import '../../../utils/utils.css'
 
 export function CatalogItem({ item }: { item: Product }) {
   const startValue = item.servingSizes.sort((a, b) => a.price - b.price)[0].price;
-  const sizeDescriptions = item.servingSizes.map(size => size.name);
+  const sizeDescriptions = 'Tamanhos: ' + item.servingSizes.map(size => size.name).join(', ').toLowerCase();
 
   return (
     <>

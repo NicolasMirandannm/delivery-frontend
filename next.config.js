@@ -6,7 +6,7 @@ const nextConfig = {
         source: '/',
         destination: '/catalog',
         permanent: true
-      },
+      }
     ]
   }
 }

@@ -1,0 +1,19 @@
+
+.container {
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+.redirect-info {
+    font-size: 1rem;
+    color: #555;
+}

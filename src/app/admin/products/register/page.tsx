@@ -1,7 +1,12 @@
+import './style.css';
+import { CreationProductForm } from '@/app/admin/products/register/creation-form/creation-product-form';
+
 export default function ProductRegister() {
+
   return (
-    <div>
-      <h1>Product Register</h1>
+    <div className={ 'wrapper' }>
+      <div className={ 'title' }>CADASTRO DE PRODUTO</div>
+      <CreationProductForm />
     </div>
   )
 }

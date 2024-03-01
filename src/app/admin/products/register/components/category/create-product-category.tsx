@@ -1,10 +1,11 @@
 'use client';
 import './create-product-category.css';
 import { Button, Input, InputRef } from 'antd';
-import { CheckOutlined, PlusOutlined, RedoOutlined } from '@ant-design/icons';
+import { CheckOutlined, PlusOutlined, RedoOutlined, UndoOutlined } from '@ant-design/icons';
 import { useRef, useState } from 'react';
+import productCategoryApi from '@/app/api/product-category/product-category.api';
 
-export function CreateProductCategory() {
+export function CreateProductCategory({ onCreateCategoruHandler }: { onCreateCategoruHandler: Function }) {
   const [addCategory, setAddCategory] = useState(false);
   const [disableSaveBtn, setDisableSaveBtn] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,13 +18,23 @@ export function CreateProductCategory() {
   const saveCategory = () => {
     setIsLoading(true);
     setDisableSaveBtn(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setAddCategory(false);
-      if (refCategory.current?.input?.value) {
-        refCategory.current.input.value = '';
-      }
-    }, 3000);
+    productCategoryApi
+      .createCategory(refCategory.current?.input?.value as string)
+      .then(() => {
+        alert('Categoria criada com sucesso!');
+        onCreateCategoruHandler();
+      })
+      .catch((err) => {
+        alert('Erro ao criar categoria: ');
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setAddCategory(false);
+        if (refCategory.current?.input?.value) {
+          refCategory.current.input.value = '';
+        }
+      })
   }
 
   return (
@@ -36,9 +47,15 @@ export function CreateProductCategory() {
           </Button>
         </div>
       ) }
-      <Button disabled={addCategory} type="dashed" onClick={ () => setAddCategory(true) } block icon={ <PlusOutlined/> }>
-        Criar nova categoria
-      </Button>
+      { !addCategory ? (
+        <Button type="dashed" onClick={ () => setAddCategory(true) } block icon={ <PlusOutlined/> }>
+          Criar nova categoria
+        </Button>
+      ) : (
+        <Button type="dashed" danger onClick={ () => setAddCategory(false) } block icon={ <UndoOutlined /> }>
+          Cancelar
+        </Button>
+      )}
     </div>
   )
 }

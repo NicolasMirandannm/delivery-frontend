@@ -1,8 +1,9 @@
 'use client';
 import './style.css'
-import { Button, Form, Input } from 'antd';
+import { Button, Divider, Form, Input } from 'antd';
 import { ProductCategory } from '@/app/admin/products/register/components/category/product-category';
 import { useState } from 'react';
+import { ServingSizesForm } from '@/app/admin/products/register/components/serving-size/serving-sizes-form';
 
 type CreationProductFields = {
   name: string;
@@ -48,6 +49,11 @@ export function CreationProductForm() {
           rules={[{ required: true, message: 'Selecione uma categoria para o produto.' }]}
         >
           <ProductCategory onSelectHandler={onSelectCategory} />
+        </Form.Item>
+
+        <Form.Item>
+          <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Tamanhos do produto</Divider>
+          <ServingSizesForm />
         </Form.Item>
 
         <Form.Item>

@@ -1,38 +1,71 @@
 'use client';
 import React, { useState } from 'react';
-import { Button, Card, Form, Input } from 'antd';
+import { Button, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { ServingSizeForm } from '@/app/admin/products/register/components/serving-size/serving-size-form';
 
 type TabOfSizes = {
   key: string;
   label: string;
+  servingSizeProps: FieldServingSizeForm;
 }
 
-type FieldServingSizeForm = {
+export type FieldServingSizeForm = {
   name: string;
   description: string;
   price: number;
 }
 
-
-export function ServingSizesForm() {
+export function ServingSizes({ servingSizeFormHandler }: { servingSizeFormHandler: Function }) {
   const [tabOfSizes, setTabOfSizes] = useState<TabOfSizes[]>([{
       key: 'Único',
       label: 'Único',
+      servingSizeProps: { name: 'Único', description: '', price: 1.00 }
     }]
   );
   const [currentTab, setCurrentTab] = useState<string>(tabOfSizes[0].key);
 
+  const lastSizeAdded = tabOfSizes[tabOfSizes.length - 1].servingSizeProps;
+  const addSizeBtnIsDisabled = !lastSizeAdded.name?.length ||
+    lastSizeAdded.price === 0 ||
+    lastSizeAdded.price == null ||
+    !lastSizeAdded.description?.length;
 
   const addNewSize = () => {
     const newKey = `Tamanho ${tabOfSizes.length + 1}`;
-    setTabOfSizes([...tabOfSizes, { key: newKey, label: newKey }]);
+    setTabOfSizes([...tabOfSizes, {
+      key: newKey,
+      label: newKey,
+      servingSizeProps: { name: newKey, description: '', price: 1.00 }
+    }]);
     setCurrentTab(newKey);
   }
 
   const onTabChange = (key: string) => {
     setCurrentTab(key);
   };
+
+  const getServingSizeProps = (key: string) => {
+    return (tabOfSizes.find(size => size.key === currentTab) || tabOfSizes[0]).servingSizeProps;
+  }
+
+  const onSaveSizeHandler = (servingSizeProps: FieldServingSizeForm) => {
+    const newTabOfSizes = tabOfSizes.map(size => {
+      if (size.key === currentTab) {
+        return {
+          key: servingSizeProps.name,
+          label: servingSizeProps.name,
+          servingSizeProps
+        }
+      }
+      return size;
+    });
+    setTabOfSizes(newTabOfSizes);
+    setCurrentTab(servingSizeProps.name)
+    const servingSizes = newTabOfSizes.map(size => size.servingSizeProps);
+    console.log(servingSizes);
+    servingSizeFormHandler(servingSizes);
+  }
 
   return (
     <>
@@ -41,41 +74,17 @@ export function ServingSizesForm() {
         tabList={tabOfSizes}
         activeTabKey={currentTab}
         tabBarExtraContent={
-          <Button type='primary' block icon={ <PlusOutlined/> } onClick={addNewSize}>Adicionar tamanho</Button>
+          <Button type='primary' block icon={ <PlusOutlined/> } onClick={addNewSize} disabled={ addSizeBtnIsDisabled }>Adicionar tamanho</Button>
         }
         onTabChange={onTabChange}
         tabProps={{
           size: 'middle',
         }}
       >
-        <Form
-          layout={'vertical'}
-          onFinish={(values) => console.log(values)}
-        >
-          <Form.Item<FieldServingSizeForm>
-            label="Nome"
-            name="name"
-            rules={[{ required: true, message: 'Nome do tamanho é um campo obrigatório' }]}
-          >
-            <Input size={'small'} />
-          </Form.Item>
-
-          <Form.Item<FieldServingSizeForm>
-            label="Descrição"
-            name="description"
-            rules={[{ required: true, message: 'Descrição do tamanho é um campo obrigatório' }]}
-          >
-            <Input.TextArea size={'small'} />
-          </Form.Item>
-
-          <Form.Item<FieldServingSizeForm>
-            label="Preço"
-            name="price"
-            rules={[{ required: true, message: 'Valor do produto nesse tamanho é um campo obrigatório' }]}
-          >
-            <Input size={'small'} type="number" />
-          </Form.Item>
-        </Form>
+        <ServingSizeForm
+          servingSizeProps={getServingSizeProps(currentTab)}
+          onSaveSizeHandler={onSaveSizeHandler}
+        />
       </Card>
     </>
   )

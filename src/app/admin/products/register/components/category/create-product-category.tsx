@@ -41,8 +41,8 @@ export function CreateProductCategory({ onCreateCategoruHandler }: { onCreateCat
     <div>
       {addCategory && (
         <div className={ 'input-wrapper' }>
-          <Input placeholder={ 'Nome da categoria...' } onInput={onInputCategory} ref={ refCategory } style={ { width: '84%' } }/>
-          <Button disabled={disableSaveBtn} type={ 'primary' } onClick={ saveCategory } style={ { width: '15%' } }>
+          <Input placeholder={ 'Nome da categoria...' } onInput={onInputCategory} ref={ refCategory } style={ { width: '69%' } }/>
+          <Button disabled={disableSaveBtn} type={ 'primary' } onClick={ saveCategory } style={ { width: '30%' } }>
             {!isLoading ? (<div>Salvar <CheckOutlined/></div>) : (<div>Salvando... <RedoOutlined spin/></div>)}
           </Button>
         </div>

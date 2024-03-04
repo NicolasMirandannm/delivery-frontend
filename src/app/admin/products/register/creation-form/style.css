@@ -1,4 +1,18 @@
 .form-wrapper {
     height: 100%;
     width: 80%;
+    padding: 20px;
+}
+
+.details-category-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: -20px;
+}
+
+.ant-form-item-label>label.ant-form-item-required::before{
+    content: none !important;
 }

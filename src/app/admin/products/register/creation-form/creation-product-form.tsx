@@ -3,21 +3,37 @@ import './style.css'
 import { Button, Divider, Form, Input } from 'antd';
 import { ProductCategory } from '@/app/admin/products/register/components/category/product-category';
 import { useState } from 'react';
-import { ServingSizesForm } from '@/app/admin/products/register/components/serving-size/serving-sizes-form';
+import {
+  FieldServingSizeForm,
+  ServingSizes
+} from '@/app/admin/products/register/components/serving-size/serving-sizes';
+import {
+  ComplementPersonalization
+} from '@/app/admin/products/register/components/complements/complement-personalization';
 
 type CreationProductFields = {
   name: string;
   description: string;
-  category: string;
+  productCategoryId: string;
+  servingSizes: Array<FieldServingSizeForm>
+  hasActiveComplements: boolean;
 }
 
 export function CreationProductForm() {
-  const [productCategory, setProductCategory] = useState<string>('');
   const [form] = Form.useForm<CreationProductFields>();
+  const [activePersonalization, setActivePersonalization] = useState<boolean>(false);
 
   const onSelectCategory = (value: string) => {
-    setProductCategory(value);
-    form.setFieldValue('category', value);
+    form.setFieldValue('productCategoryId', value);
+  }
+
+  const servingSizeFormHandler = (servingSizes: Array<FieldServingSizeForm>) => {
+    form.setFieldValue('servingSizes', servingSizes);
+  }
+
+  const enablePersonalization = (value: boolean) => {
+    form.setFieldValue('hasActiveComplements', value);
+    setActivePersonalization(value);
   }
 
   return (
@@ -26,6 +42,9 @@ export function CreationProductForm() {
         form={form}
         onFinish={(values) => console.log(values)}
         layout={'vertical'}
+        initialValues={{
+          hasActiveComplements: activePersonalization
+        }}
       >
         <Form.Item<CreationProductFields>
           label="Nome do produto"
@@ -35,26 +54,46 @@ export function CreationProductForm() {
           <Input />
         </Form.Item>
 
+        <div className={'details-category-wrapper'}>
+          <Form.Item<CreationProductFields>
+            label="Descrição do produto"
+            name="description"
+            style={{ width: '48%'}}
+            rules={[{ required: true, message: 'Produto precisa de uma descrição.' }]}
+          >
+            <Input.TextArea size={'large'} />
+          </Form.Item>
+
+          <Form.Item<CreationProductFields>
+            label={"Categoria do produto"}
+            name="productCategoryId"
+            style={{ width: '48%'}}
+            rules={[{ required: true, message: 'Selecione uma categoria para o produto.' }]}
+          >
+            <ProductCategory onSelectHandler={onSelectCategory} />
+          </Form.Item>
+        </div>
+
+        <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Tamanhos do produto</Divider>
         <Form.Item<CreationProductFields>
-          label="Descrição do produto"
-          name="description"
-          rules={[{ required: true, message: 'Produto precisa de uma descrição.' }]}
+          name="servingSizes"
+          rules={[{ required: true, message: 'Para criar um produto é necessário pelo menos um tamanho.'}]}
         >
-          <Input.TextArea />
+          <ServingSizes servingSizeFormHandler={servingSizeFormHandler}/>
         </Form.Item>
 
-        <Form.Item<CreationProductFields>
-          label={"Categoria do produto"}
-          name="category"
-          rules={[{ required: true, message: 'Selecione uma categoria para o produto.' }]}
-        >
-          <ProductCategory onSelectHandler={onSelectCategory} />
-        </Form.Item>
+        <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Personalizar produto</Divider>
+        <div>
+          <Form.Item<CreationProductFields>
+            name="hasActiveComplements"
+          >
+            { !activePersonalization
+              ? <Button size={'large'} style={{width: '100%'}} type="primary" onClick={ () => enablePersonalization(true) }>Ativar personalização</Button>
+              : <Button size={'large'} style={{width: '100%'}} type="primary" danger onClick={ () => enablePersonalization(false) }>Desativar personalização</Button> }
+          </Form.Item>
 
-        <Form.Item>
-          <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Tamanhos do produto</Divider>
-          <ServingSizesForm />
-        </Form.Item>
+          { activePersonalization && <ComplementPersonalization />}
+        </div>
 
         <Form.Item>
           <Button type="primary" htmlType="submit">

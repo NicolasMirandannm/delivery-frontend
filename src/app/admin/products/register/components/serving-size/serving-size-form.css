@@ -1,0 +1,21 @@
+.label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.input-txt {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.name-price {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}

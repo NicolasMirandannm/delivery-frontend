@@ -1,5 +1,6 @@
 'use client';
 import './style.css'
+import '@/app/utils/utils.css'
 import { Button, Divider, Form, Input } from 'antd';
 import { ProductCategory } from '@/app/admin/products/register/components/category/product-category';
 import { useState } from 'react';
@@ -22,6 +23,7 @@ type CreationProductFields = {
 export function CreationProductForm() {
   const [form] = Form.useForm<CreationProductFields>();
   const [activePersonalization, setActivePersonalization] = useState<boolean>(false);
+  const [sizesCreated, setSizesCreated] = useState<Array<string>>([]);
 
   const onSelectCategory = (value: string) => {
     form.setFieldValue('productCategoryId', value);
@@ -29,6 +31,7 @@ export function CreationProductForm() {
 
   const servingSizeFormHandler = (servingSizes: Array<FieldServingSizeForm>) => {
     form.setFieldValue('servingSizes', servingSizes);
+    setSizesCreated(servingSizes.map((size) => size.name));
   }
 
   const enablePersonalization = (value: boolean) => {
@@ -83,7 +86,7 @@ export function CreationProductForm() {
         </Form.Item>
 
         <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Personalizar produto</Divider>
-        <div>
+        <div style={{ marginBottom: 20 }}>
           <Form.Item<CreationProductFields>
             name="hasActiveComplements"
           >
@@ -92,10 +95,12 @@ export function CreationProductForm() {
               : <Button size={'large'} style={{width: '100%'}} type="primary" danger onClick={ () => enablePersonalization(false) }>Desativar personalização</Button> }
           </Form.Item>
 
-          { activePersonalization && <ComplementPersonalization />}
+          { activePersonalization &&
+            <ComplementPersonalization sizes={sizesCreated} />
+          }
         </div>
 
-        <Form.Item>
+        <Form.Item className={'centralize-column'}>
           <Button type="primary" htmlType="submit">
             Salvar
           </Button>

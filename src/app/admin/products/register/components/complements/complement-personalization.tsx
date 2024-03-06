@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ComplementFields } from '@/app/admin/products/register/components/complements/form/complement-form-types';
 import { UnityOfMeasureEnum } from '@/app/comum/enums/unity-of-measure-enum';
 
-export function ComplementPersonalization({ sizes }: {sizes: Array<string>}) {
+export function ComplementPersonalization({ sizes, complementCategoriesFormHandler }: {sizes: Array<string>, complementCategoriesFormHandler: Function}) {
   const defaultComplementCategory: ComplementFields = {
     categoryName: '',
     amountBySize: sizes.map((size) => ({ sizeDescription: size, amountAvailableToCustumer: 1 })),
@@ -19,6 +19,7 @@ export function ComplementPersonalization({ sizes }: {sizes: Array<string>}) {
 
   const addComplementCategory = () => {
     setComplementCategories([...complementCategories, defaultComplementCategory]);
+    complementCategoriesFormHandler(complementCategories);
   }
 
   return (

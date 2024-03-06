@@ -11,6 +11,7 @@ import {
 import {
   ComplementPersonalization
 } from '@/app/admin/products/register/components/complements/complement-personalization';
+import { ComplementFields } from '@/app/admin/products/register/components/complements/form/complement-form-types';
 
 type CreationProductFields = {
   name: string;
@@ -18,6 +19,7 @@ type CreationProductFields = {
   productCategoryId: string;
   servingSizes: Array<FieldServingSizeForm>
   hasActiveComplements: boolean;
+  complements: Array<ComplementFields>;
 }
 
 export function CreationProductForm() {
@@ -96,8 +98,10 @@ export function CreationProductForm() {
           </Form.Item>
 
           { activePersonalization &&
-            <ComplementPersonalization sizes={sizesCreated} />
+            <ComplementPersonalization sizes={sizesCreated} complementCategoriesFormHandler={complementCategoriesFormHandler} /> //todo implementar integração com formulario
           }
+
+
         </div>
 
         <Form.Item className={'centralize-column'}>

@@ -1,51 +1,56 @@
 import '@/app/utils/utils.css';
 import './complement-form.css'
 import { obterOpcoesUnidadeMedida, UnityOfMeasureEnum } from '@/app/comum/enums/unity-of-measure-enum';
-import { Button, Card, Dropdown, Input, InputNumber, Select, Space } from 'antd';
+import { Button, Card, Dropdown, Input, InputNumber, message, Select, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { Warning } from 'postcss';
 import { CheckCircleOutlined, IssuesCloseOutlined } from '@ant-design/icons';
+import {
+  AmountBySizeForm,
+  ComplementaryItemForm, ComplementFields
+} from '@/app/admin/products/register/components/complements/form/complement-form-types';
 
-export type AmountBySizeForm = {
-  sizeDescription: string;
-  amountAvailableToCustumer: number;
-}
+const defaultComplementaryItem = { name: '', measureType: UnityOfMeasureEnum.gramas, amountOfMeasure: 1 };
 
-export type ComplementaryItemForm = {
-  name: string;
-  measureType: UnityOfMeasureEnum;
-  amountOfMeasure: number;
-}
-
-export type ComplementFields = {
-  categoryName: string;
-  amountBySize: Array<AmountBySizeForm>;
-  complementaryItems: Array<ComplementaryItemForm>
-}
-
-const defaultComplementaryItem = {name: '', measureType: UnityOfMeasureEnum.gramas, amountOfMeasure: 1};
-
-export function ComplementForm({ sizes, hableSaveOnError, onSaveHandler }: { sizes: Array<string>, hableSaveOnError: boolean, onSaveHandler: Function }) {
-  const [itens, setItens] = useState<Array<ComplementaryItemForm>>([defaultComplementaryItem]);
+export function ComplementForm({ sizes, onSaveHandler, value, id }: {
+  sizes: Array<string>,
+  onSaveHandler: Function,
+  id: number,
+  value?: ComplementFields,
+}) {
+  const [titleOfComplementCategory, setTitleOfComplementCategory] = useState<string>(
+    value?.categoryName ?? ''
+  );
+  const [itens, setItens] = useState<Array<ComplementaryItemForm>>(
+    value?.complementaryItems ?? [defaultComplementaryItem]
+  );
   const [amountBySize, setAmountBySize] = useState<Array<AmountBySizeForm>>(
-    sizes.map((size) => ({sizeDescription: size, amountAvailableToCustumer: 1}))
+    value?.amountBySize ?? sizes.map((size) => ({ sizeDescription: size, amountAvailableToCustumer: 1 }))
   );
   const [saveBtnIsDisabled, setSaveBtnIsDisabled] = useState<boolean>(true);
   const addItemBtnIsDisabled = !itens[itens.length - 1]?.name?.length;
-
-  useEffect(() => {
-    shouldDisableBtn();
-  }, [hableSaveOnError]);
 
   const addItem = () => {
     setItens([...itens, defaultComplementaryItem])
   }
 
-  const shouldDisableBtn = () => {
-    if (!itens.some((item) =>  item.name.length > 0 && item.amountOfMeasure > 0))
+  const shouldDisableBtn = (changedComplementCategoryName?: string) => {
+    if (changedComplementCategoryName?.length === 0) {
+      setSaveBtnIsDisabled(true);
+      return;
+    }
+    if (!itens.some((item) => item.name.length > 0 && item.amountOfMeasure > 0)
+      || !titleOfComplementCategory.length
+      || (changedComplementCategoryName === value?.categoryName)
+    )
       setSaveBtnIsDisabled(true);
     else
       setSaveBtnIsDisabled(false);
+  }
+
+  const onChangeCategoryName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleOfComplementCategory(event.target.value);
+    shouldDisableBtn(event.target.value);
   }
 
   const changeItem = (index: number, item: ComplementaryItemForm) => {
@@ -61,14 +66,39 @@ export function ComplementForm({ sizes, hableSaveOnError, onSaveHandler }: { siz
   }
 
   const saveData = () => {
+    const complementFields: ComplementFields = {
+      categoryName: titleOfComplementCategory,
+      amountBySize: amountBySize,
+      complementaryItems: itens
+    }
     setSaveBtnIsDisabled(true);
-    onSaveHandler(amountBySize, itens);
+    onSaveHandler(complementFields, id);
   }
 
   return (
-    <div style={{width: '100%'}}>
+    <Card
+      title={ <p style={ {
+        textAlign: 'center',
+        fontStyle: 'oblique',
+        fontSize: '1.5em',
+        margin: 0,
+        color: 'rgba(0,0,0,0.7)'
+      } }>{
+        !titleOfComplementCategory.length ? 'Insira o nome da categoria do complemento' : titleOfComplementCategory
+      }</p> }
+      bordered
+      type={ 'inner' }
+      style={ { marginBottom: '10px' } }
+    >
+      <Input
+        style={ { marginBottom: 10 } }
+        placeholder={ 'Nome da categoria' }
+        onChange={ onChangeCategoryName }
+
+      />
       <Space direction={ 'vertical' } style={ { width: '100%' } }>
-        <Card  title={<p className={'responsive-text'}>Quantidade disponivel por tamanho para seleção do cliente</p>} style={{marginBottom: 10}}>
+        <Card title={ <p className={ 'responsive-text' }>Quantidade disponivel por tamanho para seleção do cliente</p> }
+              style={ { marginBottom: 10 } }>
           <Space direction={ 'horizontal' } style={ { width: '100%' } }>
             { amountBySize.map((size, index) => (
               <div key={ index }>
@@ -83,20 +113,22 @@ export function ComplementForm({ sizes, hableSaveOnError, onSaveHandler }: { siz
           </Space>
         </Card>
         <Card title={
-          <div className={'header-complements'}>
-            <p style={{width: '60%'}} className={'responsive-text'}>Itens complementares a serem disponibilizados</p>
+          <div className={ 'header-complements' }>
+            <p style={ { width: '60%' } } className={ 'responsive-text' }>Itens complementares a serem
+              disponibilizados</p>
             <Button
-              style={{width: '30%'}}
-              type={'primary'}
-              disabled={addItemBtnIsDisabled}
-              onClick={addItem}
+              style={ { width: '30%' } }
+              type={ 'primary' }
+              disabled={ addItemBtnIsDisabled }
+              onClick={ addItem }
             >
               Adicionar item
             </Button>
           </div>
         }>
           { itens.map((item, index) => (
-            <div key={index} className={ 'centralize-row' } style={ { width: '100%', justifyContent: 'space-evenly' } }>
+            <div key={ index } className={ 'centralize-row' }
+                 style={ { width: '100%', justifyContent: 'space-evenly' } }>
               <p style={ { marginRight: 10, fontStyle: 'oblique' } }>Item:</p>
               <Input
                 placeholder={ 'Nome do item complementar' }
@@ -119,8 +151,8 @@ export function ComplementForm({ sizes, hableSaveOnError, onSaveHandler }: { siz
             </div>
           )) }
         </Card>
-        <Button disabled={saveBtnIsDisabled} type={'primary'} style={{width: '100%'}} onClick={saveData}>
-          Salvar <IssuesCloseOutlined />
+        <Button disabled={ saveBtnIsDisabled } type={ 'primary' } style={ { width: '100%' } } onClick={ saveData }>
+          Salvar <IssuesCloseOutlined/>
         </Button>
         { !saveBtnIsDisabled && (
           <p className={ 'warn-text' }>
@@ -128,6 +160,6 @@ export function ComplementForm({ sizes, hableSaveOnError, onSaveHandler }: { siz
           </p>
         ) }
       </Space>
-    </div>
+    </Card>
   );
 }

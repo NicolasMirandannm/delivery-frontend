@@ -12,6 +12,7 @@ import {
   ComplementPersonalization
 } from '@/app/admin/products/register/components/complements/complement-personalization';
 import { ComplementFields } from '@/app/admin/products/register/components/complements/form/complement-form-types';
+import { UploadProductImage } from '@/app/admin/products/register/components/upload-image/upload-product-image';
 
 type CreationProductFields = {
   name: string;
@@ -55,6 +56,14 @@ export function CreationProductForm() {
           hasActiveComplements: activePersonalization
         } }
       >
+        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Imagem do produto</Divider>
+        <Form.Item
+          label='Insira uma imagem para representar o produto no catálogo'
+        >
+          <UploadProductImage />
+        </Form.Item>
+
+        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Dados do produto</Divider>
         <Form.Item<CreationProductFields>
           label="Nome do produto"
           name="name"
@@ -83,7 +92,7 @@ export function CreationProductForm() {
           </Form.Item>
         </div>
 
-        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.5)' } }>Tamanhos do produto</Divider>
+        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Tamanhos do produto</Divider>
         <Form.Item<CreationProductFields>
           name="servingSizes"
           rules={ [{ required: true, message: 'Para criar um produto é necessário pelo menos um tamanho.' }] }
@@ -91,7 +100,7 @@ export function CreationProductForm() {
           <ServingSizes servingSizeFormHandler={ servingSizeFormHandler }/>
         </Form.Item>
 
-        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.5)' } }>Personalizar produto</Divider>
+        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Personalizar produto</Divider>
         <div style={ { marginBottom: 20 } }>
           <Form.Item<CreationProductFields>
             name="hasActiveComplements"
@@ -117,8 +126,10 @@ export function CreationProductForm() {
                 }
               ] }
             >
-              <ComplementPersonalization sizes={ sizesCreated }
-                                         complementCategoriesFormHandler={ complementCategoriesFormHandler }/>
+              <ComplementPersonalization
+                sizes={ sizesCreated }
+                complementCategoriesFormHandler={ complementCategoriesFormHandler }
+              />
             </Form.Item>
           }
 

@@ -41,70 +41,91 @@ export function CreationProductForm() {
     setActivePersonalization(value);
   }
 
+  const complementCategoriesFormHandler = (complementCategories: Array<ComplementFields>) => {
+    form.setFieldValue('complements', complementCategories);
+  }
+
   return (
-    <div className={'form-wrapper'}>
+    <div className={ 'form-wrapper' }>
       <Form
-        form={form}
-        onFinish={(values) => console.log(values)}
-        layout={'vertical'}
-        initialValues={{
+        form={ form }
+        onFinish={ (values) => console.log(values) }
+        layout={ 'vertical' }
+        initialValues={ {
           hasActiveComplements: activePersonalization
-        }}
+        } }
       >
         <Form.Item<CreationProductFields>
           label="Nome do produto"
           name="name"
-          rules={[{ required: true, message: 'Nome do produto é um campo obrigatório' }]}
+          rules={ [{ required: true, message: 'Nome do produto é um campo obrigatório' }] }
         >
-          <Input />
+          <Input/>
         </Form.Item>
 
-        <div className={'details-category-wrapper'}>
+        <div className={ 'details-category-wrapper' }>
           <Form.Item<CreationProductFields>
             label="Descrição do produto"
             name="description"
-            style={{ width: '48%'}}
-            rules={[{ required: true, message: 'Produto precisa de uma descrição.' }]}
+            style={ { width: '48%' } }
+            rules={ [{ required: true, message: 'Produto precisa de uma descrição.' }] }
           >
-            <Input.TextArea size={'large'} />
+            <Input.TextArea size={ 'large' }/>
           </Form.Item>
 
           <Form.Item<CreationProductFields>
-            label={"Categoria do produto"}
+            label={ "Categoria do produto" }
             name="productCategoryId"
-            style={{ width: '48%'}}
-            rules={[{ required: true, message: 'Selecione uma categoria para o produto.' }]}
+            style={ { width: '48%' } }
+            rules={ [{ required: true, message: 'Selecione uma categoria para o produto.' }] }
           >
-            <ProductCategory onSelectHandler={onSelectCategory} />
+            <ProductCategory onSelectHandler={ onSelectCategory }/>
           </Form.Item>
         </div>
 
-        <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Tamanhos do produto</Divider>
+        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.5)' } }>Tamanhos do produto</Divider>
         <Form.Item<CreationProductFields>
           name="servingSizes"
-          rules={[{ required: true, message: 'Para criar um produto é necessário pelo menos um tamanho.'}]}
+          rules={ [{ required: true, message: 'Para criar um produto é necessário pelo menos um tamanho.' }] }
         >
-          <ServingSizes servingSizeFormHandler={servingSizeFormHandler}/>
+          <ServingSizes servingSizeFormHandler={ servingSizeFormHandler }/>
         </Form.Item>
 
-        <Divider orientation="left" style={{ borderColor: 'rgba(17,17,17,0.5)'}}>Personalizar produto</Divider>
-        <div style={{ marginBottom: 20 }}>
+        <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.5)' } }>Personalizar produto</Divider>
+        <div style={ { marginBottom: 20 } }>
           <Form.Item<CreationProductFields>
             name="hasActiveComplements"
           >
             { !activePersonalization
-              ? <Button size={'large'} style={{width: '100%'}} type="primary" onClick={ () => enablePersonalization(true) }>Ativar personalização</Button>
-              : <Button size={'large'} style={{width: '100%'}} type="primary" danger onClick={ () => enablePersonalization(false) }>Desativar personalização</Button> }
+              ? <Button disabled={ !sizesCreated.length } size={ 'large' } style={ { width: '100%' } } type="primary"
+                        onClick={ () => enablePersonalization(true) }>Ativar personalização</Button>
+              : <Button size={ 'large' } style={ { width: '100%' } } type="primary" danger
+                        onClick={ () => enablePersonalization(false) }>Desativar personalização</Button> }
           </Form.Item>
 
           { activePersonalization &&
-            <ComplementPersonalization sizes={sizesCreated} complementCategoriesFormHandler={complementCategoriesFormHandler} /> //todo implementar integração com formulario
+            <Form.Item<CreationProductFields>
+              name="complements"
+              rules={ [
+                {
+                  validator: (rule, value: Array<ComplementFields>) => {
+                    if (activePersonalization && !value?.length) {
+                      return Promise.reject('Com a personalização do produto ativa, é necessário pelo menos uma categoria de complemento preenchida!')
+                    }
+                    return Promise.resolve();
+                  }
+                }
+              ] }
+            >
+              <ComplementPersonalization sizes={ sizesCreated }
+                                         complementCategoriesFormHandler={ complementCategoriesFormHandler }/>
+            </Form.Item>
           }
 
 
         </div>
 
-        <Form.Item className={'centralize-column'}>
+        <Form.Item className={ 'centralize-column' }>
           <Button type="primary" htmlType="submit">
             Salvar
           </Button>

@@ -63,7 +63,6 @@ export function ServingSizes({ servingSizeFormHandler }: { servingSizeFormHandle
     setTabOfSizes(newTabOfSizes);
     setCurrentTab(servingSizeProps.name)
     const servingSizes = newTabOfSizes.map(size => size.servingSizeProps);
-    console.log(servingSizes);
     servingSizeFormHandler(servingSizes);
   }
 

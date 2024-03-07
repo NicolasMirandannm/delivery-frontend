@@ -15,11 +15,11 @@ export function ComplementPersonalization({ sizes, complementCategoriesFormHandl
   const onSaveHandler = (complementFields: ComplementFields, index: number) => {
     complementCategories[index] = complementFields;
     setComplementCategories([...complementCategories]);
+    complementCategoriesFormHandler(complementCategories);
   }
 
   const addComplementCategory = () => {
     setComplementCategories([...complementCategories, defaultComplementCategory]);
-    complementCategoriesFormHandler(complementCategories);
   }
 
   return (
@@ -30,7 +30,7 @@ export function ComplementPersonalization({ sizes, complementCategoriesFormHandl
             id={index}
             sizes={sizes}
             value={complement}
-            onSaveHandler={(complementFields: ComplementFields) => onSaveHandler(complementFields, index)}
+            onSaveHandler={ onSaveHandler }
           />
         </div>
       )) }

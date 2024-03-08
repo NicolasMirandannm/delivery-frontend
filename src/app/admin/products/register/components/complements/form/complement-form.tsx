@@ -131,7 +131,7 @@ export function ComplementForm({ sizes, onSaveHandler, value, id }: {
                  style={ { width: '100%', justifyContent: 'space-evenly' } }>
               <p style={ { marginRight: 10, fontStyle: 'oblique' } }>Item:</p>
               <Input
-                placeholder={ 'Nome do item complementar' }
+                placeholder={ 'Nome do item complementar...' }
                 style={ { width: '65%' } }
                 value={ item.name }
                 onChange={ (event) => changeItem(index, { ...item, name: event.target.value }) }

@@ -1,7 +1,7 @@
 'use client';
 import './style.css'
 import '@/app/utils/utils.css'
-import { Button, Divider, Form, Input } from 'antd';
+import { Button, Card, Divider, Form, Input } from 'antd';
 import { ProductCategory } from '@/app/admin/products/register/components/category/product-category';
 import { useState } from 'react';
 import {
@@ -21,6 +21,7 @@ type CreationProductFields = {
   servingSizes: Array<FieldServingSizeForm>
   hasActiveComplements: boolean;
   complements: Array<ComplementFields>;
+  image?: File;
 }
 
 export function CreationProductForm() {
@@ -46,6 +47,10 @@ export function CreationProductForm() {
     form.setFieldValue('complements', complementCategories);
   }
 
+  const handleOnSelectImage = (file: File) => {
+    form.setFieldValue('image', file);
+  }
+
   return (
     <div className={ 'form-wrapper' }>
       <Form
@@ -57,40 +62,44 @@ export function CreationProductForm() {
         } }
       >
         <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Imagem do produto</Divider>
-        <Form.Item
+        <Form.Item<CreationProductFields>
+          name="image"
+          rules={ [{ required: true, message: 'Imagem do produto é obrigatório' }] }
           label='Insira uma imagem para representar o produto no catálogo'
         >
-          <UploadProductImage />
+          <UploadProductImage handleOnSelectImage={handleOnSelectImage} />
         </Form.Item>
 
         <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Dados do produto</Divider>
-        <Form.Item<CreationProductFields>
-          label="Nome do produto"
-          name="name"
-          rules={ [{ required: true, message: 'Nome do produto é um campo obrigatório' }] }
-        >
-          <Input/>
-        </Form.Item>
-
-        <div className={ 'details-category-wrapper' }>
+        <Card>
           <Form.Item<CreationProductFields>
-            label="Descrição do produto"
-            name="description"
-            style={ { width: '48%' } }
-            rules={ [{ required: true, message: 'Produto precisa de uma descrição.' }] }
+            label="Nome do produto"
+            name="name"
+            rules={ [{ required: true, message: 'Nome do produto é um campo obrigatório' }] }
           >
-            <Input.TextArea size={ 'large' }/>
+            <Input placeholder="Sorvete de morango..."/>
           </Form.Item>
 
-          <Form.Item<CreationProductFields>
-            label={ "Categoria do produto" }
-            name="productCategoryId"
-            style={ { width: '48%' } }
-            rules={ [{ required: true, message: 'Selecione uma categoria para o produto.' }] }
-          >
-            <ProductCategory onSelectHandler={ onSelectCategory }/>
-          </Form.Item>
-        </div>
+          <div className={ 'details-category-wrapper' }>
+            <Form.Item<CreationProductFields>
+              label="Descrição do produto"
+              name="description"
+              style={ { width: '48%' } }
+              rules={ [{ required: true, message: 'Produto precisa de uma descrição.' }] }
+            >
+              <Input.TextArea placeholder="2 Litros de um delicioso sorvete de morango caseiro da casa..." />
+            </Form.Item>
+
+            <Form.Item<CreationProductFields>
+              label={ "Categoria do produto" }
+              name="productCategoryId"
+              style={ { width: '48%' } }
+              rules={ [{ required: true, message: 'Selecione uma categoria para o produto.' }] }
+            >
+              <ProductCategory onSelectHandler={ onSelectCategory }/>
+            </Form.Item>
+          </div>
+        </Card>
 
         <Divider orientation="left" style={ { borderColor: 'rgba(17,17,17,0.4)' } }>Tamanhos do produto</Divider>
         <Form.Item<CreationProductFields>

@@ -50,7 +50,7 @@ export function ServingSizeForm({ servingSizeProps, onSaveSizeHandler }: { servi
 
       <label className={ 'label' }>
         Descrição
-        <Input.TextArea onChange={ (e) => setDescription(e.target.value) } value={description}/>
+        <Input.TextArea placeholder="2 Litros, tamanho unico..." onChange={ (e) => setDescription(e.target.value) } value={description}/>
       </label>
 
       <Button

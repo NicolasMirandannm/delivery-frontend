@@ -15,7 +15,7 @@ import { UploadProductImage } from '@/app/admin/products/register/components/upl
 import { CreationProductFields } from '@/app/admin/products/register/creation-form/creation-product-types';
 import { FieldServingSizeForm } from '@/app/admin/products/register/components/serving-size/serving-size-types';
 
-export function CreationProductForm() {
+export function CreationProductForm({ onSaveForm }: { onSaveForm: Function}) {
   const [form] = Form.useForm<CreationProductFields>();
   const [activePersonalization, setActivePersonalization] = useState<boolean>(false);
   const [sizesCreated, setSizesCreated] = useState<Array<string>>([]);
@@ -46,7 +46,7 @@ export function CreationProductForm() {
     <div className={ 'form-wrapper' }>
       <Form
         form={ form }
-        onFinish={ (values) => console.log(values) }
+        onFinish={ (values) => onSaveForm(values) }
         layout={ 'vertical' }
         initialValues={ {
           hasActiveComplements: activePersonalization

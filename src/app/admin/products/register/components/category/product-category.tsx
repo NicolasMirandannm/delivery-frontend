@@ -14,7 +14,7 @@ export function ProductCategory({ onSelectHandler }: { onSelectHandler: Function
       setOptions(categoriesOptions);
     });
     return () => {}
-  }, []);
+  }, [options]);
 
   const onCreateCategoryHandler = () => {
     setOptions([])

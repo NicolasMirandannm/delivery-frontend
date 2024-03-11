@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './serving-size-form.css';
 import { Button, Input, InputNumber } from 'antd';
-import getBRLValueFormated from '@/app/utils/get-brl-value-formated';
-import { FieldServingSizeForm } from '@/app/admin/products/register/components/serving-size/serving-sizes';
+import { FieldServingSizeForm } from '@/app/admin/products/register/components/serving-size/serving-size-types';
 
 export function ServingSizeForm({ servingSizeProps, onSaveSizeHandler }: { servingSizeProps: FieldServingSizeForm, onSaveSizeHandler: Function }) {
   const [name, setName] = useState(servingSizeProps.name);

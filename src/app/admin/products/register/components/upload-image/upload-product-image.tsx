@@ -1,6 +1,6 @@
 'use client';
 import '@/app/utils/utils.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, GetProp, message, Modal, Upload, UploadFile, UploadProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 

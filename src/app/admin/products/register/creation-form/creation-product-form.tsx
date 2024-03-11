@@ -5,7 +5,6 @@ import { Button, Card, Divider, Form, Input } from 'antd';
 import { ProductCategory } from '@/app/admin/products/register/components/category/product-category';
 import { useState } from 'react';
 import {
-  FieldServingSizeForm,
   ServingSizes
 } from '@/app/admin/products/register/components/serving-size/serving-sizes';
 import {
@@ -13,16 +12,8 @@ import {
 } from '@/app/admin/products/register/components/complements/complement-personalization';
 import { ComplementFields } from '@/app/admin/products/register/components/complements/form/complement-form-types';
 import { UploadProductImage } from '@/app/admin/products/register/components/upload-image/upload-product-image';
-
-type CreationProductFields = {
-  name: string;
-  description: string;
-  productCategoryId: string;
-  servingSizes: Array<FieldServingSizeForm>
-  hasActiveComplements: boolean;
-  complements: Array<ComplementFields>;
-  image?: File;
-}
+import { CreationProductFields } from '@/app/admin/products/register/creation-form/creation-product-types';
+import { FieldServingSizeForm } from '@/app/admin/products/register/components/serving-size/serving-size-types';
 
 export function CreationProductForm() {
   const [form] = Form.useForm<CreationProductFields>();

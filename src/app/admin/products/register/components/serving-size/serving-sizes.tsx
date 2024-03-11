@@ -3,18 +3,10 @@ import React, { useState } from 'react';
 import { Button, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ServingSizeForm } from '@/app/admin/products/register/components/serving-size/serving-size-form';
-
-type TabOfSizes = {
-  key: string;
-  label: string;
-  servingSizeProps: FieldServingSizeForm;
-}
-
-export type FieldServingSizeForm = {
-  name: string;
-  description: string;
-  price: number;
-}
+import {
+  FieldServingSizeForm,
+  TabOfSizes
+} from '@/app/admin/products/register/components/serving-size/serving-size-types';
 
 export function ServingSizes({ servingSizeFormHandler }: { servingSizeFormHandler: Function }) {
   const [tabOfSizes, setTabOfSizes] = useState<TabOfSizes[]>([{

@@ -21,7 +21,6 @@ export function CreateProductCategory({ onCreateCategoruHandler }: { onCreateCat
     productCategoryApi
       .createCategory(refCategory.current?.input?.value as string)
       .then(() => {
-        alert('Categoria criada com sucesso!');
         onCreateCategoruHandler();
       })
       .catch((err) => {

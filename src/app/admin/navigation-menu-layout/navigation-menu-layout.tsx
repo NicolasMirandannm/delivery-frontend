@@ -17,9 +17,11 @@ const items: MenuItem[] = [
   getItem(AdminRouteKeys.PRODUCTS, adminRoutesMap.get(AdminRouteKeys.PRODUCTS)?.label,<DesktopOutlined />)
 ];
 
+let collapsedContext: boolean = false;
+
 export function NavigationMenuLayout({ children, keyPage }: { children?: React.ReactNode, keyPage: AdminRouteKeys }) {
   const nextRouter = useRouter();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(collapsedContext);
   const currentPathname = usePathname();
   const paths = currentPathname.split('/').filter(Boolean);
 
@@ -29,9 +31,14 @@ export function NavigationMenuLayout({ children, keyPage }: { children?: React.R
       nextRouter.push(path)
   };
 
+  const onCollapse = (value: boolean) => {
+    collapsedContext = value;
+    setCollapsed(value);
+  }
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => onCollapse(value)}>
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={[keyPage]} mode="inline" items={items} onSelect={(item) =>  changeRoute(item.key) } />
       </Sider>
